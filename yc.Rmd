@@ -1,21 +1,25 @@
 ---
-title: "Ycombinator's conversion rate"
-output: html_notebook
+title: "What's Y Combinator's conversion rate?"
+output:
+  html_notebook:
+    code_folding: hide
 ---
 
-```{r, echo=FALSE, message=FALSE}
+A few months ago, I was walking around Mountain View while chatting with [Zapier](https://zapier.com)'s Co-founder Bryan. I wondered, "what's Y Combinator's conversion rate?" He didn't know but suggested [yclist.com](http://yclist.com/) as a place I might find data useful to answer the question.
+
+There are a number of possible interesting sub-questions, like 'How is the conversion rate changing? Faster? Slower?', or 'Which batch had the most exits the fastest?' Perhaps I'll get to those in a second round, for now I'd like to answer simply, "What's Y Combinator's conversion rate?"
+
+```{r, message=FALSE}
 Sys.setenv(TZ='GMT')
-library(rvest)
-library(dplyr)
-library(readr)
-library(survival)
+library(rvest) # for web scraping
+library(dplyr) # for manipulating data
+library(readr) # for reading data from a csv that I'll use as a data entry tool
+library(survival) # R's basic survival anaylsis toolkit
 ```
 
 ```{r}
 site <- read_html("http://yclist.com/")
-```
 
-```{r}
 extract <- function(data, xpath) {
   data %>%
     html_nodes(xpath = xpath) %>%
@@ -31,9 +35,7 @@ companies <- tibble::tibble(
   status = site %>% extract(
     "//td[(((count(preceding-sibling::*) + 1) = 5) and parent::*)]")
 )
-```
 
-```{r}
 start_date <- function(batch) {
   if(!grepl("W", batch) & !grepl("S", batch)) return(NA)
   month <- ifelse(grepl("W", batch), "01", "06")
@@ -43,17 +45,16 @@ start_date <- function(batch) {
   paste0(year, "-", month, "-01") %>%
     as.POSIXct(origin = "1970-01-01", tz = "UTC")
 }
-```
 
-```{r}
 # companies %>%
 #   mutate(start = as.POSIXct(Vectorize(start_date)(batch), origin = "1970-01-01")) %>%
 #   filter(status == "Exited") %>%
 #   select(company) %>%
 #   write.csv("exits.csv", row.names = FALSE)
+
 ```
 
-```{r}
+```{r, fig.align='center', out.width='100%'}
 companies %>%
   mutate(start = as.POSIXct(Vectorize(start_date)(batch), origin = "1970-01-01")) %>%
   filter(!grepl("F", batch)) %>%
