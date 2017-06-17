@@ -1,8 +1,8 @@
 ---
 title: "What's Y Combinator's conversion rate?"
 output:
-html_notebook:
-code_folding: hide
+  html_notebook:
+    code_folding: hide
 ---
 
 A few months ago, I was walking around Mountain View while chatting with [Zapier](https://zapier.com)'s Co-founder Bryan. I wondered, "what's Y Combinator's conversion rate?" He didn't know but suggested [yclist.com](http://yclist.com/) as a place I might find data useful to answer the question.
@@ -119,7 +119,7 @@ outcomes %>%
         axis.text.x = element_text(size = 8)) +
   xlab("Batch") +
   ylab("Conversion Rate") +
-  ggtitle("Y Combinator batch conversion rates")
+  ggtitle("Y Combinator conversion rates by batch")
 ```
 
 At a cursory glance, it appears earlier batches had a higher conversion rates. This is confirmed by including one through four years post-batch. 
@@ -151,10 +151,12 @@ outcomes %>%
         legend.position = "top") +
   xlab("Vintage") +
   ylab("Conversion Rate") +
-  ggtitle("Y Combinator vintage conversion rates")
+  ggtitle("Y Combinator conversion rates by vintage")
 ```
 
 Two, three and four-year conversion rates have steadily declined from ~ 37-38% in 2005 to below the 5% for the 2012 through 2014 vintages.
+
+So what's Y Combinator's conversion rate? About 15% after a decade entering the batch is a pretty good answer.
 
 
 
