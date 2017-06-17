@@ -158,7 +158,4 @@ Two, three and four-year conversion rates have steadily declined from ~ 37-38% i
 
 So what's Y Combinator's conversion rate? About 15% after a decade entering the batch is a pretty good answer.
 
-
-
-
-
+If you'd like to add to this analysis, I've uploaded the code and exit date data that I compiled [here](https://github.com/statwonk/yc).
